@@ -2,6 +2,7 @@ import * as endopoints from './utility/endpoints';
 import { ConstructorStandingsList, ConstructorStandingsRootObject } from './models/constructor-standings-models';
 import { DriverStandingsList, DriverStandingsRootObject } from './models/driver-standings-models';
 import { Race, SeasonRootObject } from './models/season-models';
+import { Qualifying, QualifyingStandingsRootObject } from './models/qualifying-models'
 import { Logger } from './utility/logger';
 
 export class Backend {
@@ -29,6 +30,15 @@ export class Backend {
         const response = await fetch(endopoints.constructorStandings);
         const data: ConstructorStandingsRootObject = await response.json();
         return data.MRData.StandingsTable.StandingsLists;
+    }
+
+    async getQualiResultsByYearAndRound(year: number, round: number): Promise<Qualifying> {
+        this.logger.log('log', 'Getting quali results for year ' + year + ' adn round ' + round);
+        const url = endopoints.qualifying.replace(':year', year.toString()).replace(':round', round.toString());
+        this.logger.log('log', url);
+        const response = await fetch(url);
+        const data: QualifyingStandingsRootObject = await response.json();
+        return data.MRData.RaceTable.Races[0];
     }
 
 }
