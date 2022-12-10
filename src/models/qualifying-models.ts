@@ -2,7 +2,7 @@ import { Circuit } from "./season-models";
 import { Driver } from "./driver-standings-models";
 import { Constructor } from "./constructor-standings-models";
 
-export interface QualifyingResults{
+export interface QualifyingResults {
     number: string;
     position: string;
     Driver: Driver;
