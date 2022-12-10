@@ -1,8 +1,36 @@
-import { Circuit } from "./season-models";
-import { Driver } from "./driver-standings-models";
-import { Constructor } from "./constructor-standings-models";
+export interface Location {
+    lat: string;
+    long: string;
+    locality: string;
+    country: string;
+}
 
-export interface QualifyingResults {
+export interface Circuit {
+    circuitId: string;
+    url: string;
+    circuitName: string;
+    Location: Location;
+}
+
+export interface Driver {
+    driverId: string;
+    permanentNumber: string;
+    code: string;
+    url: string;
+    givenName: string;
+    familyName: string;
+    dateOfBirth: string;
+    nationality: string;
+}
+
+export interface Constructor {
+    constructorId: string;
+    url: string;
+    name: string;
+    nationality: string;
+}
+
+export interface QualifyingResult {
     number: string;
     position: string;
     Driver: Driver;
@@ -12,7 +40,7 @@ export interface QualifyingResults {
     Q3: string;
 }
 
-export interface Qualifying {
+export interface Race {
     season: string;
     round: string;
     url: string;
@@ -20,12 +48,13 @@ export interface Qualifying {
     Circuit: Circuit;
     date: string;
     time: string;
-    QualifyingResults: QualifyingResults;
+    QualifyingResults: QualifyingResult[];
 }
 
 export interface RaceTable {
     season: string;
-    Races: Qualifying[];
+    round: string;
+    Races: Race[];
 }
 
 export interface MRData {
@@ -38,6 +67,6 @@ export interface MRData {
     RaceTable: RaceTable;
 }
 
-export interface QualifyingStandingsRootObject {
+export interface QualifyingRootObject {
     MRData: MRData;
 }

@@ -4,9 +4,9 @@ import express, { Express, Request, Response } from 'express';
 import { Logger } from './utility/logger';
 import { DriverStandingsList } from './models/driver-standings-models';
 import { ConstructorStandingsList } from './models/constructor-standings-models';
-import { Qualifying } from './models/qualifying-models';
 import { Result } from './models/race-models';
 import { SprintResult } from './models/sprint-race-models';
+import { QualifyingResult } from './models/qualifying-models';
 
 const backend = new Backend();
 const logger = new Logger();
@@ -29,7 +29,7 @@ app.get('/constructor-standings', (req: Request, res: Response) => {
 app.get('/quali-results/:year/:round', (req: Request, res: Response) => {
     const year: number = parseInt(req.params.year);
     const round: number = parseInt(req.params.round);
-    backend.getQualiResultsByYearAndRound(year, round).then((qualiResults: Qualifying) => res.send(qualiResults));
+    backend.getQualiResultsByYearAndRound(year, round).then((qualiResults: QualifyingResult[]) => res.send(qualiResults));
 });
 
 app.get('/race-results/:year/:round', (req: Request, res: Response) => {
