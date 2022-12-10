@@ -6,6 +6,7 @@ import { DriverStandingsList } from './models/driver-standings-models';
 import { ConstructorStandingsList } from './models/constructor-standings-models';
 import { Qualifying } from './models/qualifying-models';
 import { Result } from './models/race-models';
+import { SprintResult } from './models/sprint-race-models';
 
 const backend = new Backend();
 const logger = new Logger();
@@ -37,6 +38,12 @@ app.get('/race-results/:year/:round', (req: Request, res: Response) => {
     backend.getRaceResultsByYearAndRound(year, round).then((raceResults: Result[]) => res.send(raceResults));
 });
   
+app.get('/sprint-race-results/:year/:round', (req: Request, res: Response) => {
+    const year: number = parseInt(req.params.year);
+    const round: number = parseInt(req.params.round);
+    backend.getSprintRaceResultsByYearAndRound(year, round).then((sprintResults: SprintResult[]) => res.send(sprintResults));
+});
+
 app.listen(port, () => {
     logger.log('log', `Server is running at https://localhost:${port}`);
 });

@@ -5,6 +5,7 @@ import { Race, SeasonRootObject } from './models/season-models';
 import { Qualifying, QualifyingStandingsRootObject } from './models/qualifying-models'
 import { RaceStandingsRootObject, Result } from './models/race-models'
 import { Logger } from './utility/logger';
+import { SprintRaceRootObject, SprintResult } from './models/sprint-race-models';
 
 export class Backend {
     
@@ -34,7 +35,7 @@ export class Backend {
     }
 
     async getQualiResultsByYearAndRound(year: number, round: number): Promise<Qualifying> {
-        this.logger.log('log', 'Getting quali results for year ' + year + ' adn round ' + round);
+        this.logger.log('log', 'Getting quali results for year ' + year + ' and round ' + round);
         const url = endopoints.qualifying.replace(':year', year.toString()).replace(':round', round.toString());
         this.logger.log('log', url);
         const response = await fetch(url);
@@ -43,12 +44,21 @@ export class Backend {
     }
 
     async getRaceResultsByYearAndRound(year: number, round: number): Promise<Result[]> {
-        this.logger.log('log', 'Getting race results for year ' + year + ' adn round ' + round);
+        this.logger.log('log', 'Getting race results for year ' + year + ' and round ' + round);
         const url = endopoints.race.replace(':year', year.toString()).replace(':round', round.toString());
         this.logger.log('log', url);
         const response = await fetch(url);
         const data: RaceStandingsRootObject = await response.json();
         return data.MRData.RaceTable.Races[0].Results;
+    }
+
+    async getSprintRaceResultsByYearAndRound(year: number, round: number): Promise<SprintResult[]> {
+        this.logger.log('log', 'Getting sprint race results for year ' + year + ' and round ' + round);
+        const url = endopoints.sprintRace.replace(':year', year.toString()).replace(':round', round.toString());
+        this.logger.log('log', url);
+        const response = await fetch(url);
+        const data: SprintRaceRootObject = await response.json();
+        return data.MRData.RaceTable.Races[0].SprintResults;
     }
 
 }
